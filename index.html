@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VitalCheck | BMI Calculator & Health Tracker</title>
+
+<!-- Bootstrap 5 -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+<!-- Bootstrap Icons -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+<!-- Custom CSS -->
+<link href="style.css" rel="stylesheet">
+</head>
+<body>
+
+<!-- ================= NAVBAR ================= -->
+<nav class="navbar navbar-expand-lg sticky-top navbar-custom">
+  <div class="container">
+    <a class="navbar-brand fw-bold" href="#home">
+      <i class="bi bi-heart-pulse-fill"></i> VitalCheck
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
+        <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="#calculator">BMI Calculator</a></li>
+        <li class="nav-item"><a class="nav-link" href="#tips">Health Tips</a></li>
+        <li class="nav-item"><a class="nav-link" href="#history">History</a></li>
+        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+        <li class="nav-item">
+          <button id="themeToggle" class="btn btn-sm btn-toggle ms-lg-2" title="Toggle dark / light mode">
+            <i class="bi bi-moon-stars-fill"></i>
+          </button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- ================= HOME / HERO ================= -->
+<header id="home" class="hero-section">
+  <div class="container text-center py-5">
+    <h1 class="display-4 fw-bold"><i class="bi bi-activity"></i> Know Your Body. Own Your Health.</h1>
+    <p class="lead col-lg-8 mx-auto">
+      VitalCheck helps you calculate your Body Mass Index (BMI) instantly, track your progress over time,
+      and get personalized health tips to help you live a healthier life.
+    </p>
+    <a href="#calculator" class="btn btn-lg btn-primary-custom mt-3">
+      <i class="bi bi-calculator-fill"></i> Calculate My BMI
+    </a>
+  </div>
+</header>
+
+<!-- ================= BMI CALCULATOR ================= -->
+<section id="calculator" class="section-padding">
+  <div class="container">
+    <h2 class="section-title"><i class="bi bi-calculator"></i> BMI Calculator</h2>
+    <p class="section-subtitle">Enter your details below to calculate your Body Mass Index.</p>
+
+    <div class="row g-4 justify-content-center">
+      <!-- Form -->
+      <div class="col-lg-5">
+        <div class="card shadow-sm card-custom h-100">
+          <div class="card-body">
+            <form id="bmiForm" novalidate>
+              <div class="mb-3">
+                <label class="form-label" for="height">Height (cm)</label>
+                <input type="number" step="0.1" class="form-control" id="height" name="height" placeholder="e.g. 170" required>
+              </div>
+              <div class="mb-3">
+                <label class="form-label" for="weight">Weight (kg)</label>
+                <input type="number" step="0.1" class="form-control" id="weight" name="weight" placeholder="e.g. 65" required>
+              </div>
+              <div class="row">
+                <div class="col-6 mb-3">
+                  <label class="form-label" for="age">Age</label>
+                  <input type="number" class="form-control" id="age" name="age" placeholder="e.g. 25" required>
+                </div>
+                <div class="col-6 mb-3">
+                  <label class="form-label" for="gender">Gender</label>
+                  <select class="form-select" id="gender" name="gender" required>
+                    <option value="" selected disabled>Select</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+              </div>
+              <div class="alert alert-danger d-none" id="formError"></div>
+              <button type="submit" class="btn btn-primary-custom w-100" id="calcBtn">
+                <i class="bi bi-calculator-fill"></i> Calculate BMI
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Result -->
+      <div class="col-lg-5">
+        <div class="card shadow-sm card-custom h-100" id="resultCard">
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title"><i class="bi bi-clipboard2-pulse"></i> Your Result</h5>
+            <div id="resultPlaceholder" class="placeholder-box text-center my-auto">
+              <i class="bi bi-heart-pulse display-4 text-muted"></i>
+              <p class="text-muted mt-2">Your BMI result will appear here.</p>
+            </div>
+            <div id="resultContent" class="d-none">
+              <div class="text-center mb-3">
+                <div class="bmi-gauge" id="bmiGauge">
+                  <span id="bmiValue">0</span>
+                </div>
+                <h4 id="bmiCategory" class="mt-3 fw-bold"></h4>
+              </div>
+              <div id="bmiQuote" class="quote-box mb-3"></div>
+              <h6><i class="bi bi-lightbulb-fill"></i> Personalized Tips</h6>
+              <ul id="bmiTips" class="tips-list"></ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BMI Trend Chart -->
+    <div class="row mt-5">
+      <div class="col-12">
+        <div class="card shadow-sm card-custom">
+          <div class="card-body">
+            <h5 class="card-title"><i class="bi bi-graph-up-arrow"></i> Your BMI Trend</h5>
+            <canvas id="bmiChart" height="90"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= HEALTH TIPS ================= -->
+<section id="tips" class="section-padding alt-bg">
+  <div class="container">
+    <h2 class="section-title"><i class="bi bi-lightbulb"></i> Health Tips</h2>
+    <p class="section-subtitle">General guidance for every BMI category.</p>
+    <div class="row g-4">
+      <div class="col-md-6 col-lg-3">
+        <div class="card tip-card h-100 border-info">
+          <div class="card-body">
+            <i class="bi bi-arrow-down-circle-fill text-info fs-2"></i>
+            <h5 class="mt-2">Underweight</h5>
+            <p>Focus on nutrient-dense meals, strength training, and consistent eating schedules.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-3">
+        <div class="card tip-card h-100 border-success">
+          <div class="card-body">
+            <i class="bi bi-check-circle-fill text-success fs-2"></i>
+            <h5 class="mt-2">Normal</h5>
+            <p>Maintain balance with varied diet, regular activity, and good sleep hygiene.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-3">
+        <div class="card tip-card h-100 border-warning">
+          <div class="card-body">
+            <i class="bi bi-exclamation-triangle-fill text-warning fs-2"></i>
+            <h5 class="mt-2">Overweight</h5>
+            <p>Increase physical activity, reduce processed foods, and monitor portions.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-3">
+        <div class="card tip-card h-100 border-danger">
+          <div class="card-body">
+            <i class="bi bi-heart-pulse-fill text-danger fs-2"></i>
+            <h5 class="mt-2">Obese</h5>
+            <p>Consult a healthcare professional for a personalized, sustainable weight plan.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= HISTORY ================= -->
+<section id="history" class="section-padding">
+  <div class="container">
+    <div class="d-flex justify-content-between align-items-center flex-wrap">
+      <div>
+        <h2 class="section-title mb-0"><i class="bi bi-clock-history"></i> BMI History</h2>
+        <p class="section-subtitle">Your past calculations, saved automatically.</p>
+      </div>
+      <button id="refreshHistory" class="btn btn-outline-secondary mb-3">
+        <i class="bi bi-arrow-clockwise"></i> Refresh
+      </button>
+    </div>
+    <div class="table-responsive card card-custom shadow-sm">
+      <table class="table table-hover align-middle mb-0" id="historyTable">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Date</th>
+            <th>Height (cm)</th>
+            <th>Weight (kg)</th>
+            <th>Age</th>
+            <th>Gender</th>
+            <th>BMI</th>
+            <th>Category</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="historyBody">
+          <tr><td colspan="9" class="text-center text-muted py-4">Loading history...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONTACT ================= -->
+<section id="contact" class="section-padding alt-bg">
+  <div class="container">
+    <h2 class="section-title"><i class="bi bi-envelope-heart"></i> Contact Us</h2>
+    <p class="section-subtitle">Have questions about your health data? Reach out to us.</p>
+    <div class="row justify-content-center">
+      <div class="col-lg-6">
+        <form id="contactForm">
+          <div class="mb-3">
+            <input type="text" class="form-control" placeholder="Your Name" required>
+          </div>
+          <div class="mb-3">
+            <input type="email" class="form-control" placeholder="Your Email" required>
+          </div>
+          <div class="mb-3">
+            <textarea class="form-control" rows="4" placeholder="Your Message" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary-custom w-100">
+            <i class="bi bi-send-fill"></i> Send Message
+          </button>
+        </form>
+        <div id="contactSuccess" class="alert alert-success mt-3 d-none">
+          Thanks for reaching out! This is a demo form (no backend wired up yet).
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer class="footer-custom text-center py-4">
+  <div class="container">
+    <p class="mb-1"><i class="bi bi-heart-pulse-fill"></i> VitalCheck &mdash; Your Health Companion</p>
+    <small>&copy; <span id="year"></span> VitalCheck. This tool is for informational purposes only and is not a substitute for professional medical advice.</small>
+  </div>
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<!-- Custom JS -->
+<script src="script.js"></script>
+</body>
+</html>

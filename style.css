@@ -1,0 +1,226 @@
+/* =========================================================
+   VitalCheck — BMI Calculator Styles
+   Health-themed palette: greens, blues, whites
+========================================================= */
+
+:root {
+  --primary-green: #1fab6b;
+  --primary-green-dark: #178a56;
+  --primary-blue: #2f7fd6;
+  --bg-light: #f4fbf8;
+  --card-light: #ffffff;
+  --text-light: #1b2a26;
+  --muted-light: #5f7a72;
+  --border-light: #e1efe9;
+
+  --bg-dark: #0f1a17;
+  --card-dark: #16241f;
+  --text-dark: #eaf6f1;
+  --muted-dark: #9fb8ae;
+  --border-dark: #24382f;
+
+  --radius: 14px;
+  --transition: all 0.25s ease;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background-color: var(--bg-light);
+  color: var(--text-light);
+  transition: var(--transition);
+}
+
+body.dark-mode {
+  background-color: var(--bg-dark);
+  color: var(--text-dark);
+}
+
+a { text-decoration: none; }
+
+/* ---------------- Navbar ---------------- */
+.navbar-custom {
+  background: linear-gradient(90deg, var(--primary-green), var(--primary-blue));
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+}
+.navbar-custom .navbar-brand,
+.navbar-custom .nav-link {
+  color: #ffffff !important;
+  font-weight: 500;
+}
+.navbar-custom .nav-link:hover {
+  color: #d8ffef !important;
+  opacity: 0.85;
+}
+.btn-toggle {
+  background: rgba(255,255,255,0.15);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+}
+.btn-toggle:hover { background: rgba(255,255,255,0.3); color: #fff; }
+
+/* ---------------- Hero ---------------- */
+.hero-section {
+  background: radial-gradient(circle at top left, #e4f8ef, transparent 60%),
+              radial-gradient(circle at bottom right, #e6f2fb, transparent 60%),
+              var(--bg-light);
+  padding: 60px 0 40px;
+}
+body.dark-mode .hero-section {
+  background: radial-gradient(circle at top left, #16302670, transparent 60%),
+              radial-gradient(circle at bottom right, #16283670, transparent 60%),
+              var(--bg-dark);
+}
+.hero-section h1 i { color: var(--primary-green); }
+.hero-section .lead { color: var(--muted-light); }
+body.dark-mode .hero-section .lead { color: var(--muted-dark); }
+
+.btn-primary-custom {
+  background: linear-gradient(90deg, var(--primary-green), var(--primary-blue));
+  border: none;
+  color: #fff;
+  font-weight: 600;
+  border-radius: 50px;
+  padding: 10px 26px;
+  transition: var(--transition);
+}
+.btn-primary-custom:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(31,171,107,0.35);
+  color: #fff;
+}
+
+/* ---------------- Sections ---------------- */
+.section-padding { padding: 70px 0; }
+.alt-bg { background-color: rgba(31,171,107,0.05); }
+body.dark-mode .alt-bg { background-color: rgba(31,171,107,0.07); }
+
+.section-title {
+  font-weight: 700;
+  color: var(--primary-green-dark);
+  margin-bottom: 6px;
+}
+body.dark-mode .section-title { color: #4fe0a3; }
+.section-subtitle {
+  color: var(--muted-light);
+  margin-bottom: 30px;
+}
+body.dark-mode .section-subtitle { color: var(--muted-dark); }
+
+/* ---------------- Cards ---------------- */
+.card-custom {
+  background-color: var(--card-light);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+  transition: var(--transition);
+}
+body.dark-mode .card-custom {
+  background-color: var(--card-dark);
+  border-color: var(--border-dark);
+  color: var(--text-dark);
+}
+.card-custom:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.06); }
+
+.tip-card {
+  border-radius: var(--radius);
+  border-top-width: 4px !important;
+  background-color: var(--card-light);
+  transition: var(--transition);
+}
+body.dark-mode .tip-card {
+  background-color: var(--card-dark);
+  color: var(--text-dark);
+}
+.tip-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.08); }
+
+/* ---------------- Form ---------------- */
+.form-control, .form-select {
+  border-radius: 10px;
+  border: 1px solid var(--border-light);
+  padding: 10px 14px;
+}
+body.dark-mode .form-control,
+body.dark-mode .form-select {
+  background-color: #1d2e28;
+  border-color: var(--border-dark);
+  color: var(--text-dark);
+}
+body.dark-mode .form-control::placeholder { color: #7f9a90; }
+.form-control:focus, .form-select:focus {
+  border-color: var(--primary-green);
+  box-shadow: 0 0 0 0.2rem rgba(31,171,107,0.2);
+}
+
+/* ---------------- Result Card ---------------- */
+.placeholder-box { min-height: 220px; }
+.bmi-gauge {
+  width: 140px;
+  height: 140px;
+  margin: 0 auto;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.1rem;
+  font-weight: 700;
+  color: #fff;
+  background: conic-gradient(var(--primary-green) 0deg, var(--primary-blue) 360deg);
+  box-shadow: 0 6px 20px rgba(31,171,107,0.3);
+}
+#bmiCategory { color: var(--primary-green-dark); }
+body.dark-mode #bmiCategory { color: #4fe0a3; }
+
+.quote-box {
+  background: rgba(47,127,214,0.08);
+  border-left: 4px solid var(--primary-blue);
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-style: italic;
+  font-size: 0.92rem;
+}
+body.dark-mode .quote-box { background: rgba(47,127,214,0.15); }
+
+.tips-list li { margin-bottom: 6px; }
+
+/* Category color helpers */
+.cat-underweight { color: #2f7fd6; }
+.cat-normal { color: #1fab6b; }
+.cat-overweight { color: #e0a51a; }
+.cat-obese { color: #e0503a; }
+
+/* ---------------- History Table ---------------- */
+#historyTable thead { background-color: rgba(31,171,107,0.08); }
+body.dark-mode #historyTable thead { background-color: rgba(31,171,107,0.15); }
+body.dark-mode #historyTable, body.dark-mode #historyTable td, body.dark-mode #historyTable th {
+  color: var(--text-dark);
+  border-color: var(--border-dark);
+}
+.badge-category {
+  padding: 5px 10px;
+  border-radius: 50px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #fff;
+}
+.badge-underweight { background-color: #2f7fd6; }
+.badge-normal { background-color: #1fab6b; }
+.badge-overweight { background-color: #e0a51a; }
+.badge-obese { background-color: #e0503a; }
+
+/* ---------------- Footer ---------------- */
+.footer-custom {
+  background: linear-gradient(90deg, var(--primary-green-dark), #245f9c);
+  color: #eaf6f1;
+}
+
+/* ---------------- Misc ---------------- */
+::selection { background: var(--primary-green); color: #fff; }
+
+@media (max-width: 576px) {
+  .bmi-gauge { width: 110px; height: 110px; font-size: 1.6rem; }
+  .section-padding { padding: 50px 0; }
+}
